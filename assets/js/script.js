@@ -481,7 +481,7 @@ function clickIconPlay(e){
     // Set an interval of 1000 milliseconds
     // for updating the seek slider
     updateTimer = setInterval(seekUpdate, 1000);
-    // music.addEventListener("ended", stopMusic(e));
+    music.addEventListener("ended", stopMusic(e));
 
 
 }
@@ -686,9 +686,8 @@ function follow(e) {
 }
 
 function stopMusic(e) {
-  music.currentTime = 0;
   unactiveSong(item_list.getAttribute('id_item_playing'));//annuler les active
-  e.setAttribute('name', 'play-circle-sharp');
+  // e.setAttribute('name', 'play-circle-sharp');
   switchPlayPauseIcon('play');
   setEqualizer('');
 }
@@ -833,6 +832,8 @@ const mobile_menu = document.querySelector('[data-mobile-menu]');
 const overlay = document.querySelector('[data-overlay]');
 const slide_song = document.querySelector('.slide-song');
 const side_bar_right = document.getElementById('sidebar-bg');
+const play_content = document.getElementById('play-content');
+const play_song = document.getElementById('play-song');
 
 
 const btn_click_open_menu_fixed = document.querySelector('[data-nav-toggler-fixed]');
@@ -853,3 +854,30 @@ const closeMenu = function () {
 btn_click_close_menu.addEventListener('click',closeMenu);
 
 
+const alert = document.querySelector('.alert');
+const icon = document.querySelector('.alert-icon');
+
+
+setInterval(() => {
+  checkInternt();
+}, 10000);
+
+function checkInternt() {
+  
+    if(navigator.onLine){
+      alert.classList.remove('active');
+      play_content.classList.remove('hide-less'); 
+      play_song.classList.remove('hide-less');
+    } else {
+      alert.classList.add('active');
+      play_content.classList.add('hide-less'); 
+      play_song.classList.add('hide-less'); 
+    }
+    
+  }
+  
+const closeAlert = function () { 
+    alert.classList.remove('active');
+    play_content.classList.remove('hide-less'); 
+    play_song.classList.remove('hide-less');   }
+ icon.addEventListener('click', closeAlert);

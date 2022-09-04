@@ -24,7 +24,7 @@
 	<main>
 
 		
-		<section class="play-content">
+		<section class="play-content" id="play-content">
 		
 		<div class="overlay" data-overlay></div>
 
@@ -97,8 +97,10 @@
 							<input  type="text" name="search-field" placeholder="Rechercher un artiste , un son">
 						</div>
 
+
+
 						<div class="sidebar-right-img">
-							<img src="./assets/img/others/photo.jpg" width="40" height="40">
+							<img src="./assets/img/others/photo.jpg" width="40" height="40" data-profil-toggler-fixed>
 						</div>
 					</div>
 
@@ -156,7 +158,7 @@
 				</section>
 		</section>
 
-		<section class="play-song">
+		<section class="play-song" id="play-song">
 
 				<div class="song-playing">
 					<div class="waves" data-waves>
@@ -191,6 +193,13 @@
 				</div>
 		</section>
 		
+		<div class="alert alert-danger">
+			<ion-icon name="alert-circle-sharp"></ion-icon>
+			<p>Votre connexion internet est <b id="faible">faible</b> ou <b id="eteinte">éteinte</b></p>	
+			<ion-icon disabled class="alert-icon" name="close-sharp"></ion-icon>
+		</div>
+
+
 	</main>
 
  		<!--
