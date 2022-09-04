@@ -917,7 +917,9 @@ const closeAlert = function () {
 
  function sessionSet(key,value,text) {
   sessionStorage.setItem(key, value);
-  addAlert(text);
+  if (text) {
+    addAlert(text);
+  }
 }
 
 function sessionGet(key) {
