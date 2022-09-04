@@ -357,7 +357,7 @@ let updateTimer;
 //   element.getElementsByClassName('song-content')[0].innerHTML = songs[i].song_name;
 // });
 
-const play_btn = document.querySelector('[data-play-btn]');
+const play_btn = document.getElementsByClassName('play_btn')[0];
 const waves = document.querySelector('[data-waves]');
 const wave = document.getElementsByClassName('wave')[0];
 const item_list = document.getElementsByClassName('sidebar-left-playlist-song')[0];
@@ -370,13 +370,13 @@ play_btn.addEventListener('click', () => {
 
   if (music.paused || music.currentTime <= 0) {
     music.play();
-    switchPlayPauseIcon('pause');
+    switchPlayPauseIcon('pause-circle-sharp');
     setEqualizer('active');
     sessionSet('music',title)
 
   } else {
     music.pause();
-    switchPlayPauseIcon('play');
+    switchPlayPauseIcon('play-circle-sharp');
     setEqualizer('');
   }
 });
@@ -437,14 +437,14 @@ function clickIconPlay(e){
           unactiveSong(item_list.getAttribute('id_item_playing'));//annuler les active
           music.currentTime <= 0;
           e.setAttribute('name', 'play-circle-sharp');
-          switchPlayPauseIcon('play');
+          switchPlayPauseIcon('play-circle-sharp');
           setEqualizer('');
         }else
         {
           activeSongOnly(item_list.getAttribute('id_item_playing'));//annuler les active
           music.play();
           e.setAttribute('name', 'stop-circle-sharp');
-          switchPlayPauseIcon('pause');  
+          switchPlayPauseIcon('pause-circle-sharp');  
           setEqualizer('active');
           sessionSet('music',title)
 
@@ -471,7 +471,7 @@ function clickIconPlay(e){
 
 
       if (play_btn.getAttribute('name') == 'play') {
-        switchPlayPauseIcon('pause');
+        switchPlayPauseIcon('pause-circle-sharp');
         e.setAttribute('name', 'stop-circle-sharp');
         music.play();
         setEqualizer('active');
@@ -479,7 +479,7 @@ function clickIconPlay(e){
 
 
       } else {
-        switchPlayPauseIcon('play');
+        switchPlayPauseIcon('play-circle-sharp');
         music.currentTime = 0;
         e.setAttribute('name', 'play-circle-sharp');
         setEqualizer('');
@@ -542,7 +542,7 @@ Array.from(document.getElementsByClassName('playlist-play-btn')).forEach((elemen
           unactiveSong(item_list.getAttribute('id_item_playing'));//annuler les active
           music.currentTime <= 0
           e.target.setAttribute('name', 'play-circle-sharp');
-          switchPlayPauseIcon('play');
+          switchPlayPauseIcon('play-circle-sharp');
           setEqualizer('');
         }else
         {
@@ -552,7 +552,7 @@ Array.from(document.getElementsByClassName('playlist-play-btn')).forEach((elemen
           sessionSet('music',title)
 
           e.target.setAttribute('name', 'stop-circle-sharp');
-          switchPlayPauseIcon('pause');  
+          switchPlayPauseIcon('pause-circle-sharp');  
           setEqualizer('active');
         }
         
@@ -578,7 +578,7 @@ Array.from(document.getElementsByClassName('playlist-play-btn')).forEach((elemen
 
 
       if (play_btn.getAttribute('name') == 'play') {
-        switchPlayPauseIcon('pause');
+        switchPlayPauseIcon('pause-circle-sharp');
         e.target.setAttribute('name', 'stop-circle-sharp');
         music.play();
         sessionSet('music',title)
@@ -587,7 +587,7 @@ Array.from(document.getElementsByClassName('playlist-play-btn')).forEach((elemen
 
 
       } else {
-        switchPlayPauseIcon('play');
+        switchPlayPauseIcon('play-circle-sharp');
         music.currentTime = 0;
         e.target.setAttribute('name', 'play-circle-sharp');
         setEqualizer('');
@@ -680,14 +680,14 @@ function playTrack() {
   music.play();
   isPlaying = true;
   setEqualizer('active');
-  sessionSet('music',title)
-
+  
   // Replace icon with the pause icon
-  switchPlayPauseIcon('pause');
-
+  switchPlayPauseIcon('pause-circle-sharp');
+  
   // Set an interval of 1000 milliseconds
-    // for updating the seek slider
-    updateTimer = setInterval(seekUpdate, 1000);
+  // for updating the seek slider
+  updateTimer = setInterval(seekUpdate, 1000);
+  // sessionSet('music',title)
 }
 
 function pauseTrack() {
@@ -696,7 +696,7 @@ function pauseTrack() {
   isPlaying = false;
 
   // Replace icon with the play icon
-  switchPlayPauseIcon('play');
+  switchPlayPauseIcon('play-circle-sharp');
 }
 
 function follow(e) {
@@ -706,7 +706,7 @@ function follow(e) {
 
 music.onended = function() {
   unactiveSong(item_list.getAttribute('id_item_playing'));//annuler les active
-  switchPlayPauseIcon('play');
+  switchPlayPauseIcon('play-circle-sharp');
   setEqualizer('');
 };
 
@@ -1037,4 +1037,16 @@ function sessionGet(key) {
  
   sessionSet("salutation",1,"Hé salut c\'est Sylvain <br> Mets tes écouteurs .");
   
+ }
+
+
+ function hideMenuPlaylist() {
+  let menu_playlist= document.querySelector(".menu-playlist");
+  menu_playlist.classList.remove('active');
+ }
+
+
+ function showMenuPlaylist() {
+  let menu_playlist= document.querySelector(".menu-playlist");
+  menu_playlist.classList.add('active');
  }

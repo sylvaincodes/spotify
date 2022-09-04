@@ -86,18 +86,16 @@
 
 						<nav class="sidebar-right-nav">
 							<ul class="nav-list">
-								<li class="nav-list-item "><a class="active" href="">découvrir</a> </li>
-								<li class="nav-list-item "><a  href="">bibliothèque</a> </li>
-								<li class="nav-list-item "><a href="">radio</a> </li>
+								<li class="nav-list-item"><a class="active" href="">découvrir</a> </li>
+								<li class="nav-list-item hidden"><a  href="">bibliothèque</a> </li>
+								<li class="nav-list-item hidden"><a href="">radio</a> </li>
 							</ul>
 						</nav>
 
-						<div class="sidebar-right-search autocomplete">
+						<div class="sidebar-right-search hidden autocomplete ">
 							<ion-icon name="search-outline"></ion-icon>
 							<input  id="myInput" type="text" name="search-field" placeholder="Rechercher un artiste , un son">
 						</div>
-
-
 
 						<div class="sidebar-right-img">
 							<img src="./assets/img/others/photo.jpg" width="40" height="40" data-profil-toggler-fixed>
@@ -106,9 +104,9 @@
 
 					<div class="sidebar-right-content">
 						<h3>alen walker-fade</h3>
-						<p>you were the shadow to my life did you feel us another start you fade <br> awway afraid our aim is out of sight wanna see us alive.......</p>
+						<p>you were the shadow to my life did you feel us another start you fade <br> away afraid our aim is out of sight wanna see us alive.......</p>
 						<div class="sidebar-right-btn">
-							<button class="btn-action active" onclick="playTrack();">
+							<button class="btn-action active" onclick="playTrack('faded');">
 								jouer
 							</button>
 							<button class="btn-action" onclick="follow(this);">
@@ -161,7 +159,7 @@
 		<section class="play-song" id="play-song">
 
 				<div class="song-playing">
-					<div class="waves" data-waves>
+					<div class="waves hidden " data-waves>
 						<div class="wave" data-wave></div>
 						<div class="wave"></div>
 						<div class="wave"></div>
@@ -171,27 +169,33 @@
 							<div class="song-content-title" id="title_playlist">faded</div>
 							<div class="song-content-artist-name" id="name_playlist">alan walker</div>
 					</div>
+					<div class="play-btn">
+						<ion-icon class="play_btn" name="play-circle-sharp"></ion-icon>
+						<ion-icon onclick="showMenuPlaylist();" name="ellipsis-vertical-sharp"></ion-icon>
+					</div>
 				</div>
 
-				<div class="song-btn" data-song-btn>
+				<div class="song-btn hidden" data-song-btn>
 					<ion-icon class="prev-track" name="play-back" onclick="prevTrack()"></ion-icon>
-					<ion-icon data-play-btn name="play"></ion-icon>
+					<ion-icon class="play_btn" name="play"></ion-icon>
 					<ion-icon class="next-track" name="play-forward" onclick="nextTrack()"></ion-icon>
 				</div>
 
-				<div class="song-bar">
+				<div class="song-bar hidden">
 					<span class="current-time" data-current-time>0:00</span>
 					<input class="seek_slider" value="1" type="range" data-range-time name="play_range" onchange="seekTo();">
 					<span class="total-duration" data-total-duration>0:00</span>
 				</div>
 
-				<div class="song-vol">
+				<div class="song-vol hidden">
 					<ion-icon class="mute-music" onclick="toggleVolume();" name="volume-high-outline"></ion-icon>
 					<input min="1" max="100"
 					value="99" class="volume_slider" type="range" name="play_range" onchange="setVolume();">
 					<!-- <ion-icon name="volume-high-outline"></ion-icon> -->
 				</div>
 		</section>
+
+		
 		
 		<div class="alert alert-danger">
 			<ion-icon name="alert-circle-sharp"></ion-icon>
@@ -205,7 +209,55 @@
 			<ion-icon disabled class="alert-icon" name="close-sharp"></ion-icon>
 		</div>
 
+		<div class="menu-playlist ">
+			<div class="header">
+				<ion-icon onclick="hideMenuPlaylist();"  name="chevron-down-sharp"></ion-icon>
+				<p class="header-text">Faded</p>
+				<ion-icon name="apps-sharp"></ion-icon>
+			</div>
+			<div class="content">
+				<img class="track-image" src="./assets/img/artists/1/albums/1/1.jpg" alt="faded">
+				<p  class="song-content-artist-name">alan walker</p>
+				<p class="song-content-title">faded</p>
+			</div>
+
+			<div class="actions-btn-list">
+				<button class="btn-item">
+					<ion-icon name="heart-outline"></ion-icon>
+					<span>favoris</span>
+				</button>
+				<button class="btn-item">
+					<ion-icon name="add"></ion-icon>
+					<span>playlistes</span>
+				</button><button class="btn-item">
+					<ion-icon name="reload"></ion-icon>
+					<span>répéter</span>
+				</button><button class="btn-item">
+					<ion-icon name="cloud-download"></ion-icon>
+					<span>télécharger</span>
+				</button><button class="btn-item">
+					<ion-icon name="share-social"></ion-icon>
+					<span>partager</span>
+				</button>
+			</div>
+
+			<div class="song-bar">
+				<span class="current-time" data-current-time>0:00</span>
+				<input class="seek_slider" value="1" type="range" data-range-time name="play_range" onchange="seekTo();">
+				<span class="total-duration" data-total-duration>0:00</span>
+			</div>
+
+			<div class="song-btn" data-song-btn>
+				<ion-icon class="prev-track" name="play-back" onclick="prevTrack()"></ion-icon>
+				<ion-icon class="play_btn" name="play-circle"></ion-icon>
+				<ion-icon class="next-track" name="play-forward" onclick="nextTrack()"></ion-icon>
+			</div>
+
+
+		</div>
+
 	</main>
+
 
  		<!--
             - custom js link
