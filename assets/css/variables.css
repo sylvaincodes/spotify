@@ -10,13 +10,14 @@
     --noir-violet : HSL(145, 61%, 69%); 
     --jaune-pur : HSL(145, 61%, 69%); 
     --black : HSL(210, 29%, 13%); 
-    --black-2 : #1A80DC; 
     --white : HSL(210, 9%, 70%); 
     --orange : HSL(63, 95%, 40%);
     --white-2 : HSL(63, 0%, 100%);
     --red : HSL(0, 63%, 40%);
-    --blue : HSL(208, 88%, 41%);
+    --blue : #2587AB;
+    /* --blue : #D0D854; */
     --noir-fonce : #021E36;
+    --lighblue : lightblue;
 
     /* Tailles */
     --fs-1: 4.8rem;
@@ -30,7 +31,8 @@
     --fs-9: 1.3rem;
     --fs-10: 1.1rem;
     --fs-11: 1.0rem;
-    --fs-12: 0.5rem;
+    --fs-12: 0.8rem;
+    --fs-13: 0.5rem;
 
     /* font weight */
     --fw-400: 400;
