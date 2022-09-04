@@ -1,5 +1,6 @@
 'use strict'
 
+console.log(sessionStorage.getItem("music"));
 // import { autocomplete } from './autocomplete';
 
 // Get the root element
@@ -371,6 +372,8 @@ play_btn.addEventListener('click', () => {
     music.play();
     switchPlayPauseIcon('pause');
     setEqualizer('active');
+    sessionSet('music',title)
+
   } else {
     music.pause();
     switchPlayPauseIcon('play');
@@ -392,6 +395,8 @@ const setEqualizer = (value) => {
     waves.classList.remove('active');
   }
 }
+
+
 
 function clickIconPlay(e){
  
@@ -441,6 +446,8 @@ function clickIconPlay(e){
           e.setAttribute('name', 'stop-circle-sharp');
           switchPlayPauseIcon('pause');  
           setEqualizer('active');
+          sessionSet('music',title)
+
         }
         
 
@@ -454,6 +461,7 @@ function clickIconPlay(e){
         activeSongOnly(id);
         e.setAttribute('name', 'stop-circle-sharp');
         music.play();
+        sessionSet('music',title)
 
       }
     }
@@ -467,6 +475,7 @@ function clickIconPlay(e){
         e.setAttribute('name', 'stop-circle-sharp');
         music.play();
         setEqualizer('active');
+        sessionSet('music',title)
 
 
       } else {
@@ -483,7 +492,7 @@ function clickIconPlay(e){
     // Set an interval of 1000 milliseconds
     // for updating the seek slider
     updateTimer = setInterval(seekUpdate, 1000);
-    music.addEventListener("ended", stopMusic(e));
+    // music.addEventListener("ended", stopMusic(e));
 
 
 }
@@ -503,6 +512,7 @@ Array.from(document.getElementsByClassName('playlist-play-btn')).forEach((elemen
     const artiste = e.target.getAttribute('artiste');
     const album = e.target.getAttribute('album');
     let content = document.getElementById('track-artist');
+
 
     console.log(title);
 
@@ -538,6 +548,9 @@ Array.from(document.getElementsByClassName('playlist-play-btn')).forEach((elemen
         {
           activeSongOnly(item_list.getAttribute('id_item_playing'));//annuler les active
           music.play();
+
+          sessionSet('music',title)
+
           e.target.setAttribute('name', 'stop-circle-sharp');
           switchPlayPauseIcon('pause');  
           setEqualizer('active');
@@ -554,6 +567,7 @@ Array.from(document.getElementsByClassName('playlist-play-btn')).forEach((elemen
         activeSongOnly(id);
         e.target.setAttribute('name', 'stop-circle-sharp');
         music.play();
+        sessionSet('music',title)
 
       }
     }
@@ -567,6 +581,8 @@ Array.from(document.getElementsByClassName('playlist-play-btn')).forEach((elemen
         switchPlayPauseIcon('pause');
         e.target.setAttribute('name', 'stop-circle-sharp');
         music.play();
+        sessionSet('music',title)
+
         setEqualizer('active');
 
 
@@ -664,6 +680,7 @@ function playTrack() {
   music.play();
   isPlaying = true;
   setEqualizer('active');
+  sessionSet('music',title)
 
   // Replace icon with the pause icon
   switchPlayPauseIcon('pause');
@@ -687,12 +704,11 @@ function follow(e) {
   e.textContent = "SUIVI";
 }
 
-function stopMusic(e) {
+music.onended = function() {
   unactiveSong(item_list.getAttribute('id_item_playing'));//annuler les active
-  // e.setAttribute('name', 'play-circle-sharp');
   switchPlayPauseIcon('play');
   setEqualizer('');
-}
+};
 
 
 function nextTrack() {
@@ -857,12 +873,26 @@ btn_click_close_menu.addEventListener('click',closeMenu);
 
 
 const alert = document.querySelector('.alert');
+const alert_notif = document.querySelector('.alert-notif');
+const alert_notif_text = document.querySelector('.alert-notif-text');
 const icon = document.querySelector('.alert-icon');
 
 
 setInterval(() => {
   checkInternt();
 }, 10000);
+
+
+function addAlert(text){
+
+  alert_notif_text.innerHTML = text
+  alert_notif.classList.add('active');
+
+  setTimeout(() => {
+    alert_notif.classList.remove('active');
+  }, 4000);
+}
+
 
 function checkInternt() {
   
@@ -885,9 +915,16 @@ const closeAlert = function () {
  icon.addEventListener('click', closeAlert);
 
 
+ function sessionSet(key,value,text) {
+  sessionStorage.setItem(key, value);
+  addAlert(text);
+}
 
-//  autocomplete
+function sessionGet(key) {
+  return sessionStorage.getItem(key);
+}
 
+//autocomplete
  function autocomplete(inp, arr) {
   /*the autocomplete function takes two arguments,
   the text field element and an array of possible autocompleted values:*/
@@ -988,3 +1025,14 @@ const closeAlert = function () {
  var artists_autocomplete = ["Alan walker","Arielle","Sia","The weekend","Michael Jackson"];
 
  autocomplete(document.getElementById("myInput"), artists_autocomplete);
+
+
+//  Salutation
+ if (sessionGet('salutation')==1) {
+   
+   console.log("salutation");
+}else{
+ 
+  sessionSet("salutation",1,"Hé salut c\'est Sylvain <br> Mets tes écouteurs .");
+  
+ }
