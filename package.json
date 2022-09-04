@@ -1,0 +1,20 @@
+{
+  "name": "spotify",
+  "version": "1.0.0",
+  "description": "Site web de streaming music",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://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@github.com/sylvaincodes/spotify.git"
+  },
+  "author": "adande sylvain",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sylvaincodes/spotify/issues"
+  },
+  "homepage": "https://github.com/sylvaincodes/spotify#readme",
+  "type": "module"
+}
