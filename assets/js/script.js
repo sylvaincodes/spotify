@@ -53,7 +53,7 @@ const albums = [
   {
     id: 1,
     album_name: `<div class="most-populars-item slide-song" onclick="get_songs(this,1,1);">
-    <img src="./assets/img/artists/1/albums/1/1.jpg" width="150" height="150">
+    <img src="./assets/img/artists/1/albums/1/1.jpg" width="120" height="120">
     <h3 class="most-populars-title">faded</h3>
     <h4 class="most-populars-title">alan walker</h4>
     <ion-icon name="play-circle-sharp"></ion-icon>
@@ -63,7 +63,7 @@ const albums = [
   },{
     id: 2,
     album_name: `<div class="most-populars-item slide-song" onclick="get_songs(this,1,2);">
-    <img src="./assets/img/artists/1/albums/2/1.jpg" width="150" height="150">
+    <img src="./assets/img/artists/1/albums/2/1.jpg" width="120" height="120">
     <h3 class="most-populars-title">different world</h3>
     <h4 class="most-populars-title">alan walker</h4>
     <ion-icon name="play-circle-sharp"></ion-icon>
@@ -280,7 +280,7 @@ if (artiste==1) {
   {
     id: 1,
     album_name: `<div class="most-populars-item slide-song active-album" onclick="get_songs(1,1);">
-    <img src="./assets/img/artists/1/albums/1/1.jpg" width="150" height="150">
+    <img src="./assets/img/artists/1/albums/1/1.jpg" width="120" height="120">
     <h3 class="most-populars-title">faded</h3>
     <h4 class="most-populars-title">alan walker</h4>
     <ion-icon name="play-circle-sharp"></ion-icon>
@@ -290,7 +290,7 @@ if (artiste==1) {
   },{
     id: 2,
     album_name: `<div class="most-populars-item slide-song active-album" onclick="get_songs(this,1,2);">
-    <img src="./assets/img/artists/1/albums/2/1.jpg" width="150" height="150">
+    <img src="./assets/img/artists/1/albums/2/1.jpg" width="120" height="120">
     <h3 class="most-populars-title">different world</h3>
     <h4 class="most-populars-title">alan walker</h4>
     <ion-icon name="play-circle-sharp"></ion-icon>
@@ -309,7 +309,7 @@ if (artiste==2) {
    {
      id: 1,
      album_name: `<div class="most-populars-item slide-song active-album" onclick="get_songs(this,2,1);">
-     <img src="./assets/img/artists/2/albums/1/1.jpg" width="150" height="150">
+     <img src="./assets/img/artists/2/albums/1/1.jpg" width="120" height="120">
      <h3 class="most-populars-title">diferent heaven</h3>
      <h4 class="most-populars-title">diferent heaven</h4>
      <ion-icon name="play-circle-sharp"></ion-icon>
