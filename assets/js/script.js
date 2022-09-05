@@ -174,7 +174,7 @@ function get_songs(e,artiste,album) {
     element.classList.remove('active-album');
   });
 
-  e.target.classList.add('active-album')
+  e.classList.add('active-album')
 
   let  songs_album = [];
 
@@ -794,9 +794,9 @@ btn_click_close_menu.addEventListener('click',closeMenu);
 
 
 
-setInterval(() => {
-  checkInternt();
-}, 10000);
+// setInterval(() => {
+//   checkInternt();
+// }, 10000);
 
 
 function addAlert(text){
