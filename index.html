@@ -209,13 +209,13 @@
 			<ion-icon disabled class="alert-icon" name="close-sharp"></ion-icon>
 		</div>
 
-		<div class="menu-playlist ">
+		<div class="menu-playlist">
 			<div class="header">
 				<ion-icon onclick="hideMenuPlaylist();"  name="chevron-down-sharp"></ion-icon>
 				<p class="header-text">Faded</p>
 				<ion-icon name="apps-sharp"></ion-icon>
 			</div>
-			<div class="content">
+			<div class="content" id="content_menu">
 				<img class="track-image" src="./assets/img/artists/1/albums/1/1.jpg" alt="faded">
 				<p  class="song-content-artist-name">alan walker</p>
 				<p class="song-content-title">faded</p>
@@ -242,17 +242,22 @@
 			</div>
 
 			<div class="song-bar">
-				<span class="current-time" data-current-time>0:00</span>
-				<input class="seek_slider" value="1" type="range" data-range-time name="play_range" onchange="seekTo();">
-				<span class="total-duration" data-total-duration>0:00</span>
+				<span class="current-time-playlist" data-current-time>0:00</span>
+				<input class="seek_slider_playlist" value="1" type="range" data-range-time name="play_range" onchange="seekTo();">
+				<span class="total-duration-playlist" data-total-duration>0:00</span>
 			</div>
 
 			<div class="song-btn" data-song-btn>
 				<ion-icon class="prev-track" name="play-back" onclick="prevTrack()"></ion-icon>
-				<ion-icon class="play_btn" name="play-circle"></ion-icon>
+				<ion-icon class="play_btn2" name="play-circle"></ion-icon>
 				<ion-icon class="next-track" name="play-forward" onclick="nextTrack()"></ion-icon>
 			</div>
 
+			<div class="waves" data-waves2>
+				<div class="wave" data-wave></div>
+				<div class="wave"></div>
+				<div class="wave"></div>
+			</div>
 
 		</div>
 

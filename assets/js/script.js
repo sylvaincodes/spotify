@@ -1,6 +1,47 @@
 'use strict'
 
-console.log(sessionStorage.getItem("music"));
+// MUSIC PLAYER
+
+// const music = document.createElement('audio');
+const music = new Audio('./assets/audio/artistes/1/albums/1/1.mp3');
+const seek_slider = document.querySelector(".seek_slider");
+const seek_slider_playlist = document.querySelector(".seek_slider_playlist");
+const volume_slider = document.querySelector(".volume_slider");
+const curr_time = document.querySelector(".current-time");
+const curr_time_playlist = document.querySelector(".current-time-playlist");
+const total_duration = document.querySelector(".total-duration");
+const total_duration_playlist = document.querySelector(".total-duration-playlist");
+const mute_music = document.querySelector(".mute-music");
+
+const track_image = document.getElementsByClassName('track-image')[0];
+const track_artist = document.getElementsByClassName('track-artist')[0];
+
+var track_index = 0;
+var isPlaying = false;
+var updateTimer;
+
+const play_btn = document.getElementsByClassName('play_btn')[0];
+const play_btn2 = document.getElementsByClassName('play_btn2')[0];
+const waves = document.querySelector('[data-waves]');
+const waves2 = document.querySelector('[data-waves2]');
+const wave = document.getElementsByClassName('wave')[0];
+const item_list = document.getElementsByClassName('sidebar-left-playlist-song')[0];
+
+
+const mobile_menu = document.querySelector('[data-mobile-menu]');
+const overlay = document.querySelector('[data-overlay]');
+const slide_song = document.querySelector('.slide-song');
+const side_bar_right = document.getElementById('sidebar-bg');
+const play_content = document.getElementById('play-content');
+const play_song = document.getElementById('play-song');
+const btn_click_open_menu_fixed = document.querySelector('[data-nav-toggler-fixed]');
+const btn_click_close_menu = document.querySelector('[data-close-menu]');
+const alert = document.querySelector('.alert');
+const alert_notif = document.querySelector('.alert-notif');
+const alert_notif_text = document.querySelector('.alert-notif-text');
+const icon = document.querySelector('.alert-icon');
+
+
 // import { autocomplete } from './autocomplete';
 
 // Get the root element
@@ -95,7 +136,7 @@ const songs = [
       <div class="song-content-title">faded</div>
       <div class="song-content-artist-name">alan walker</div>
     </div>
-    <ion-icon image="1.jpg" title="faded" artiste_name="alan walker" id="0" class="playlist-play-btn" artiste="1" album="1" mp3="1.mp3" name="play-circle"></ion-icon>
+    <ion-icon onclick="clickIconPlay(this);" album_name="faded" image="1.jpg" title="faded" artiste_name="alan walker" id="0" class="playlist-play-btn" artiste="1" album="1" mp3="1.mp3" name="play-circle"></ion-icon>
     </div>`,
     song_image: './assets/img/artists/1/albums/1/1.jpg',
     album_id: 1
@@ -109,19 +150,19 @@ const songs = [
       <div class="song-content-title">on my way</div>
       <div class="song-content-artist-name">alan walker</div>
     </div>
-    <ion-icon image="2.jpg" title="on my way" artiste_name="alan walker" id="1" class="playlist-play-btn" artiste="1" album="1" mp3="2.mp3" name="play-circle"></ion-icon>
+    <ion-icon onclick="clickIconPlay(this);" album_name="faded" image="2.jpg" title="on my way" artiste_name="alan walker" id="1" class="playlist-play-btn" artiste="1" album="1" mp3="2.mp3" name="play-circle"></ion-icon>
     </div>`,
     song_image: './assets/img/artists/1/albums/1/2.jpg',
     album_id: 1
   }
 ];
 
-var str_album_songs ='';
-const album_songs_list= document.getElementById('album_songs_list');
-songs.forEach(element => {
-  str_album_songs +=element.song_name;
-});
-album_songs_list.innerHTML = str_album_songs; // API GET ALL SONGS FROM ALBUMS
+  var str_album_songs ='';
+  const album_songs_list= document.getElementById('album_songs_list');
+  songs.forEach(element => {
+    str_album_songs +=element.song_name;
+  });
+  album_songs_list.innerHTML = str_album_songs; // API GET ALL SONGS FROM ALBUMS
 
 
 
@@ -129,12 +170,11 @@ album_songs_list.innerHTML = str_album_songs; // API GET ALL SONGS FROM ALBUMS
 function get_songs(e,artiste,album) {
 
 
-  console.log(artiste);
   Array.from(document.getElementsByClassName('most-populars-item')).forEach((element, i) => {
     element.classList.remove('active-album');
   });
 
-  e.classList.add('active-album')
+  e.target.classList.add('active-album')
 
   let  songs_album = [];
 
@@ -150,7 +190,7 @@ if (artiste==1 &&album==1) {
         <div class="song-content-title">faded</div>
         <div class="song-content-artist-name">alan walker</div>
       </div>
-      <ion-icon onclick="clickIconPlay(this);" image="1.jpg" title="faded" artiste_name="alan walker" id="0" class="playlist-play-btn" artiste="${artiste}" album="${album}" mp3="1.mp3" name="play-circle"></ion-icon>
+      <ion-icon onclick="clickIconPlay(this);" album_name="faded" image="1.jpg" title="faded" artiste_name="alan walker" id="0" class="playlist-play-btn" artiste="${artiste}" album="${album}" mp3="1.mp3" name="play-circle"></ion-icon>
       </div>`,
       song_image: `./assets/audio/artists/${artiste}/albums/${album}/1.jpg`,
       album_id: 1
@@ -164,7 +204,7 @@ if (artiste==1 &&album==1) {
         <div class="song-content-title">on my way</div>
         <div class="song-content-artist-name">alan walker</div>
       </div>
-      <ion-icon onclick="clickIconPlay(this);" image="2.jpg" title="on my way" artiste_name="alan walker" id="1" class="playlist-play-btn" artiste="${artiste}" album="${album}" mp3="2.mp3" name="play-circle"></ion-icon>
+      <ion-icon onclick="clickIconPlay(this);" album_name="faded" image="2.jpg" title="on my way" artiste_name="alan walker" id="1" class="playlist-play-btn" artiste="${artiste}" album="${album}" mp3="2.mp3" name="play-circle"></ion-icon>
       </div>`,
       song_image: `./assets/audio/artists/${artiste}/albums/${album}/2.jpg`,
       album_id: 1
@@ -184,7 +224,7 @@ if (artiste==1 &&album==2) {
         <div class="song-content-title">different world</div>
         <div class="song-content-artist-name">alan walker</div>
       </div>
-      <ion-icon onclick="clickIconPlay(this);" image="1.jpg" title="different world" artiste_name="alan walker" id="0" class="playlist-play-btn" artiste="${artiste}" album="${album}" mp3="1.mp3" name="play-circle"></ion-icon>
+      <ion-icon onclick="clickIconPlay(this);" album_name="different world" image="1.jpg" title="different world" artiste_name="alan walker" id="0" class="playlist-play-btn" artiste="${artiste}" album="${album}" mp3="1.mp3" name="play-circle"></ion-icon>
       </div>`,
       song_image: `./assets/audio/artists/${artiste}/albums/${album}/1.jpg`,
       album_id: 1
@@ -198,7 +238,7 @@ if (artiste==1 &&album==2) {
         <div class="song-content-title">lost control</div>
         <div class="song-content-artist-name">alan walker</div>
       </div>
-      <ion-icon onclick="clickIconPlay(this);" image="2.jpg" title="lost control" artiste_name="alan walker" id="1" class="playlist-play-btn" artiste="${artiste}" album="${album}" mp3="2.mp3" name="play-circle"></ion-icon>
+      <ion-icon onclick="clickIconPlay(this);" album_name="different world" image="2.jpg" title="lost control" artiste_name="alan walker" id="1" class="playlist-play-btn" artiste="${artiste}" album="${album}" mp3="2.mp3" name="play-circle"></ion-icon>
       </div>`,
       song_image: `./assets/audio/artists/${artiste}/albums/${album}/2.jpg`,
       album_id: 1
@@ -211,7 +251,7 @@ if (artiste==1 &&album==2) {
         <div class="song-content-title">lilly</div>
         <div class="song-content-artist-name">alan walker</div>
       </div>
-      <ion-icon onclick="clickIconPlay(this);" image="3.jpg" title="lilly" artiste_name="alan walker" id="2" class="playlist-play-btn" artiste="${artiste}" album="${album}" mp3="3.mp3" name="play-circle"></ion-icon>
+      <ion-icon onclick="clickIconPlay(this);" album_name="different world" image="3.jpg" title="lilly" artiste_name="alan walker" id="2" class="playlist-play-btn" artiste="${artiste}" album="${album}" mp3="3.mp3" name="play-circle"></ion-icon>
       </div>`,
       song_image: `./assets/audio/artists/${artiste}/albums/${album}/3.jpg`,
       album_id: 1
@@ -233,7 +273,7 @@ if (artiste==2 &&album==1) {
        <div class="song-content-title">my heart</div>
        <div class="song-content-artist-name">different heaven</div>
      </div>
-     <ion-icon onclick="clickIconPlay(this);" image="1.jpg" title="my heart" artiste_name="different heaven" id="0" class="playlist-play-btn" artiste="${artiste}" album="${album}" mp3="1.mp3" name="play-circle"></ion-icon>
+     <ion-icon onclick="clickIconPlay(this);" album_name="different heaven" image="1.jpg" title="my heart" artiste_name="different heaven" id="0" class="playlist-play-btn" artiste="${artiste}" album="${album}" mp3="1.mp3" name="play-circle"></ion-icon>
      </div>`,
      song_image: `./assets/audio/artists/${artiste}/albums/${album}/1.jpg`,
      album_id: 1
@@ -247,7 +287,7 @@ if (artiste==2 &&album==1) {
        <div class="song-content-title">safe and sound</div>
        <div class="song-content-artist-name">different heaven</div>
      </div>
-     <ion-icon onclick="clickIconPlay(this);" image="2.jpg" title="safe and sound" artiste_name="different world" id="1" class="playlist-play-btn" artiste="${artiste}" album="${album}" mp3="2.mp3" name="play-circle"></ion-icon>
+     <ion-icon onclick="clickIconPlay(this);" album_name="different heaven" image="2.jpg" title="safe and sound" artiste_name="different world" id="1" class="playlist-play-btn" artiste="${artiste}" album="${album}" mp3="2.mp3" name="play-circle"></ion-icon>
      </div>`,
      song_image: `./assets/audio/artists/${artiste}/albums/${album}/2.jpg`,
      album_id: 1
@@ -268,7 +308,6 @@ album_songs_list.innerHTML = str_album_songs;
 // API GET ALBUMS FROM ARTISTS
 function get_albums(e,artiste) {
 
-  console.log(artiste);
   Array.from(document.getElementsByClassName('most-populars-item')).forEach((element, i) => {
     element.classList.remove('active');
   });
@@ -332,38 +371,9 @@ albums.forEach(element => {
 albums_list.innerHTML = str_albums; // API GET ALL ALBUMS
 }
 
-const music = new Audio('./assets/audio/artistes/1/albums/1/1.mp3');
-// const music = document.createElement('audio');
-
-// MUSIC PLAYER
-let seek_slider = document.querySelector(".seek_slider");
-let volume_slider = document.querySelector(".volume_slider");
-let curr_time = document.querySelector(".current-time");
-let total_duration = document.querySelector(".total-duration");
-let mute_music = document.querySelector(".mute-music");
-
-let track_image = document.getElementsByClassName('track-image')[0];
-const track_artist = document.getElementsByClassName('track-artist')[0];
-
-
-// Specify globally used values
-let track_index = 0;
-let isPlaying = false;
-let updateTimer;
-
-
-// Array.from(document.getElementsByClassName('sidebar-left-playlist-song-item')).forEach((element, i) => {
-//   element.getElementsByTagName('img')[0].src = songs[i].song_image;
-//   element.getElementsByClassName('song-content')[0].innerHTML = songs[i].song_name;
-// });
-
-const play_btn = document.getElementsByClassName('play_btn')[0];
-const waves = document.querySelector('[data-waves]');
-const wave = document.getElementsByClassName('wave')[0];
-const item_list = document.getElementsByClassName('sidebar-left-playlist-song')[0];
-
 const switchPlayPauseIcon = (value) => {
   play_btn.setAttribute('name', value);
+  play_btn2.setAttribute('name', value);
 }
 
 play_btn.addEventListener('click', () => {
@@ -372,7 +382,22 @@ play_btn.addEventListener('click', () => {
     music.play();
     switchPlayPauseIcon('pause-circle-sharp');
     setEqualizer('active');
-    sessionSet('music',title)
+    sessionSet('isplaying',true)
+
+  } else {
+    music.pause();
+    switchPlayPauseIcon('play-circle-sharp');
+    setEqualizer('');
+  }
+});
+
+play_btn2.addEventListener('click', () => {
+
+  if (music.paused || music.currentTime <= 0) {
+    music.play();
+    switchPlayPauseIcon('pause-circle-sharp');
+    setEqualizer('active');
+    sessionSet('isplaying',true)
 
   } else {
     music.pause();
@@ -390,17 +415,16 @@ const setAllPlayBtn = () => {
 const setEqualizer = (value) => {
   if (value=='active') {
     waves.classList.add('active');
+    waves2.classList.add('active');
   }
   else{
     waves.classList.remove('active');
+    waves2.classList.remove('active');
   }
 }
 
-
-
+//Play a music 
 function clickIconPlay(e){
- 
-
     setAllPlayBtn();
     const title = e.getAttribute('title');
     const artiste_name = e.getAttribute('artiste_name');
@@ -409,9 +433,10 @@ function clickIconPlay(e){
     const id = e.getAttribute('id');
     const artiste = e.getAttribute('artiste');
     const album = e.getAttribute('album');
+    const album_name = e.getAttribute('album_name');
     let content = document.getElementById('track-artist');
-
-    console.log(title);
+    let content_menu = document.getElementById('content_menu');
+    let header_text = document.querySelector('.header-text');
 
     music.src = `./assets/audio/artistes/${artiste}/albums/${album}/${index}`;
 
@@ -423,19 +448,25 @@ function clickIconPlay(e){
   content.innerHTML = `<div class="song-content-title" id="title_playlist">${title}</div>
   <div class="song-content-artist-name" id="name_playlist">${artiste_name}</div>`;
 
+  content_menu.innerHTML = `<img class="track-image" src="./assets/img/artists/${artiste}/albums/${album}/${image}" alt="faded">
+  <p class="song-content-artist-name">${artiste_name}</p>
+  <p class="song-content-title">${title}</p>`;
 
-    
+  header_text.textContent = `${album_name}`;
+
+  
+
+
     if (item_list.hasAttribute('id_item_playing')) {
-      console.log('item_id exitse');
 
       let id_item_playing = item_list.getAttribute('id_item_playing');
 
       if (id == id_item_playing) {
         
 
-        if (play_btn.getAttribute('name') == 'pause') {
+        if (play_btn.getAttribute('name') == 'pause' || play_btn2.getAttribute('name') == 'pause') {
           unactiveSong(item_list.getAttribute('id_item_playing'));//annuler les active
-          music.currentTime <= 0;
+          music.currentTime = 0;
           e.setAttribute('name', 'play-circle-sharp');
           switchPlayPauseIcon('play-circle-sharp');
           setEqualizer('');
@@ -443,6 +474,7 @@ function clickIconPlay(e){
         {
           activeSongOnly(item_list.getAttribute('id_item_playing'));//annuler les active
           music.play();
+
           e.setAttribute('name', 'stop-circle-sharp');
           switchPlayPauseIcon('pause-circle-sharp');  
           setEqualizer('active');
@@ -467,10 +499,9 @@ function clickIconPlay(e){
     }
     else {
 
-      toogleActiveSong(id);
+      activeSongOnly(id);
 
-
-      if (play_btn.getAttribute('name') == 'play') {
+      if (play_btn.getAttribute('name') == 'play-circle-sharp' || play_btn2.getAttribute('name') == 'play-circle-sharp') {
         switchPlayPauseIcon('pause-circle-sharp');
         e.setAttribute('name', 'stop-circle-sharp');
         music.play();
@@ -497,126 +528,14 @@ function clickIconPlay(e){
 
 }
 
-//Jouer un Titre de l'album
-Array.from(document.getElementsByClassName('playlist-play-btn')).forEach((element, i) => {
-
-  element.addEventListener('click', (e) => {
-
-  
-    setAllPlayBtn();
-    const title = e.target.getAttribute('title');
-    const artiste_name = e.target.getAttribute('artiste_name');
-    const image = e.target.getAttribute('image');
-    const index = e.target.getAttribute('mp3');
-    const id = e.target.getAttribute('id');
-    const artiste = e.target.getAttribute('artiste');
-    const album = e.target.getAttribute('album');
-    let content = document.getElementById('track-artist');
-
-
-    console.log(title);
-
-    music.src = `./assets/audio/artistes/${artiste}/albums/${album}/${index}`;
-
-
-  // Update details of the track
-  track_image.src = `./assets/img/artists/${artiste}/albums/${album}/${image}`;
-  
-  // track_artist.innerHTML = songs[track_index].song_name;
-  content.innerHTML = `<div class="song-content-title" id="title_playlist">${title}</div>
-  <div class="song-content-artist-name" id="name_playlist">${artiste_name}</div>`;
-
-
-
-    
-    if (item_list.hasAttribute('id_item_playing')) {
-      console.log('item_id exitse');
-
-      let id_item_playing = item_list.getAttribute('id_item_playing');
-
-      if (id == id_item_playing) {
-        
-        console.log(play_btn.getAttribute('name'));
-
-        if (play_btn.getAttribute('name') == 'pause') {
-          unactiveSong(item_list.getAttribute('id_item_playing'));//annuler les active
-          music.currentTime <= 0
-          e.target.setAttribute('name', 'play-circle-sharp');
-          switchPlayPauseIcon('play-circle-sharp');
-          setEqualizer('');
-        }else
-        {
-          activeSongOnly(item_list.getAttribute('id_item_playing'));//annuler les active
-          music.play();
-
-          sessionSet('music',title)
-
-          e.target.setAttribute('name', 'stop-circle-sharp');
-          switchPlayPauseIcon('pause-circle-sharp');  
-          setEqualizer('active');
-        }
-        
-
-      } 
-      else 
-      {
-
-        unactiveSong(item_list.getAttribute('id_item_playing'));//annuler les active
-        music.currentTime = 0;
-
-        activeSongOnly(id);
-        e.target.setAttribute('name', 'stop-circle-sharp');
-        music.play();
-        sessionSet('music',title)
-
-      }
-    }
-    else {
-      console.log('item_id exitse pas');
-
-      toogleActiveSong(id);
-
-
-      if (play_btn.getAttribute('name') == 'play') {
-        switchPlayPauseIcon('pause-circle-sharp');
-        e.target.setAttribute('name', 'stop-circle-sharp');
-        music.play();
-        sessionSet('music',title)
-
-        setEqualizer('active');
-
-
-      } else {
-        switchPlayPauseIcon('play-circle-sharp');
-        music.currentTime = 0;
-        e.target.setAttribute('name', 'play-circle-sharp');
-        setEqualizer('');
-
-      }
-    }
-
-    item_list.setAttribute('id_item_playing', id)
-
-    // Set an interval of 1000 milliseconds
-    // for updating the seek slider
-    updateTimer = setInterval(seekUpdate, 1000);
-
-  })
-});
-
-function playSong() {
-
-}
-
-
-
+//active and unactive music song background while playing
 function toogleActiveSong(id) {
 
   const numero_item = document.getElementsByClassName('song-number')[id];
   const div_item = document.getElementsByClassName('sidebar-left-playlist-song-item')[id];
   const icon_item = document.getElementsByClassName('playlist-play-btn')[id];
 
-  if (play_btn.getAttribute('name') == 'play') {
+  if (play_btn.getAttribute('name') == 'play-circle-sharp' || play_btn2.getAttribute('name') == 'play-circle-sharp') {
     numero_item.classList.add('play-on-numero');
     div_item.classList.add('play-on-item');
     icon_item.classList.add('play-on-icon');
@@ -631,7 +550,7 @@ function toogleActiveSong(id) {
   }
 }
 
-
+//active music song background while playing
 function activeSongOnly(id) {
 
   const numero_item = document.getElementsByClassName('song-number')[id];
@@ -645,7 +564,7 @@ function activeSongOnly(id) {
 
 }
 
-
+//unactive music song background while playing
 function unactiveSong(id) {
 
   const numero_item = document.getElementsByClassName('song-number')[id];
@@ -658,15 +577,15 @@ function unactiveSong(id) {
   icon_item.setAttribute('name', 'play-circle-sharp');
 }
 
-
-
-
 // Function to reset all values to their default
 function resetValues() {
   curr_time.textContent = "00:00";
   total_duration.textContent = "00:00";
+  curr_time_playlist.textContent = "00:00";
+  total_duration_playlist.textContent = "00:00";
   seek_slider.value = 0;
 }
+
 
 function playpauseTrack() {
   // Switch between playing and pausing
@@ -752,6 +671,9 @@ function loadTrack(track_index) {
   let image = data.getAttribute('image');
   let title = data.getAttribute('title');
   let artiste_name = data.getAttribute('artiste_name');
+  const album_name = data.getAttribute('album_name');
+  let header_text = document.querySelector('.header-text');
+
 
   // Load a new track
   music.src = `./assets/audio/artistes/${artiste}/albums/${album}/${mp3}`;
@@ -763,6 +685,14 @@ function loadTrack(track_index) {
   // track_artist.innerHTML = songs[track_index].song_name;
   content.innerHTML = `<div class="song-content-title" id="title_playlist">${title}</div>
   <div class="song-content-artist-name" id="name_playlist">${artiste_name}</div>`;
+
+  
+  content_menu.innerHTML = `<img class="track-image" src="./assets/img/artists/${artiste}/albums/${album}/${image}" alt="faded">
+  <p class="song-content-artist-name">${artiste_name}</p>
+  <p class="song-content-title">${title}</p>`;
+
+  header_text.textContent = `${album_name}`;
+
 
   // Move to the next track if the current finishes playing
   // using the 'ended' event
@@ -811,6 +741,7 @@ function toggleVolume() {
   }
 }
 
+//update seek input
 function seekUpdate() {
   let seekPosition = 0;
 
@@ -818,6 +749,7 @@ function seekUpdate() {
   if (!isNaN(music.duration)) {
     seekPosition = music.currentTime * (100 / music.duration);
     seek_slider.value = seekPosition;
+    seek_slider_playlist.value = seekPosition;
 
     // Calculate the time left and the total duration
     let currentMinutes = Math.floor(music.currentTime / 60);
@@ -833,28 +765,18 @@ function seekUpdate() {
 
     // Display the updated duration
     curr_time.textContent = currentMinutes + ":" + currentSeconds;
-    total_duration.textContent = durationMinutes + ":" + durationSeconds;
+    total_duration.textContent = durationMinutes + ":" + durationSeconds;   
+    curr_time_playlist.textContent = currentMinutes + ":" + currentSeconds;
+    total_duration_playlist.textContent = durationMinutes + ":" + durationSeconds;
   }
 }
 
-// const imageBg = document.getElementById('sidebar-bg');
-
-// setInterval(25000,imageBg.style.backgroundImage = "url('./assets/img/artists/1/1.jpg')");
-
+//opedn side left
 function openSidebar() {
   document.querySelector('.sidebar-left').style.display = "block";
 }
 
 
-const mobile_menu = document.querySelector('[data-mobile-menu]');
-const overlay = document.querySelector('[data-overlay]');
-const slide_song = document.querySelector('.slide-song');
-const side_bar_right = document.getElementById('sidebar-bg');
-const play_content = document.getElementById('play-content');
-const play_song = document.getElementById('play-song');
-
-
-const btn_click_open_menu_fixed = document.querySelector('[data-nav-toggler-fixed]');
 const openMenu = function () { 
       overlay.classList.add('active') ;
     mobile_menu.classList.add('active'); 
@@ -862,7 +784,6 @@ const openMenu = function () {
 }
 btn_click_open_menu_fixed.addEventListener('click',openMenu);
 
-const btn_click_close_menu = document.querySelector('[data-close-menu]');
 const closeMenu = function () { 
   mobile_menu.classList.remove('active');    
   overlay.classList.remove('active'); 
@@ -871,11 +792,6 @@ const closeMenu = function () {
 }
 btn_click_close_menu.addEventListener('click',closeMenu);
 
-
-const alert = document.querySelector('.alert');
-const alert_notif = document.querySelector('.alert-notif');
-const alert_notif_text = document.querySelector('.alert-notif-text');
-const icon = document.querySelector('.alert-icon');
 
 
 setInterval(() => {
@@ -911,8 +827,10 @@ function checkInternt() {
 const closeAlert = function () { 
     alert.classList.remove('active');
     play_content.classList.remove('hide-less'); 
-    play_song.classList.remove('hide-less');   }
- icon.addEventListener('click', closeAlert);
+    play_song.classList.remove('hide-less');  
+ }
+  
+icon.addEventListener('click', closeAlert);
 
 
  function sessionSet(key,value,text) {
@@ -1025,18 +943,11 @@ function sessionGet(key) {
 }
 
  var artists_autocomplete = ["Alan walker","Arielle","Sia","The weekend","Michael Jackson"];
-
  autocomplete(document.getElementById("myInput"), artists_autocomplete);
 
 
 //  Salutation
- if (sessionGet('salutation')==1) {
-   
-   console.log("salutation");
-}else{
- 
-  sessionSet("salutation",1,"Hé salut c\'est Sylvain <br> Mets tes écouteurs .");
-  
+ if (sessionGet('salutation')==1) {}else{sessionSet("salutation",1,"Hé salut c\'est Sylvain <br> Mets tes écouteurs .");
  }
 
 

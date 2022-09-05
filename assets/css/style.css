@@ -1443,10 +1443,12 @@ autocomplete
     .menu-playlist .content .song-content-artist-name{
         font-weight: var(--fw-300);
         padding-top: 20px;
+        text-transform: capitalize;
     }
 
     .menu-playlist .content .song-content-title{
         font-weight: var(--fw-700);
+        text-transform: capitalize;
     }
 
     .menu-playlist .content img{
@@ -1512,8 +1514,51 @@ autocomplete
 
     }
     
-    .menu-playlist .song-btn .play_btn{
+    .menu-playlist .song-btn .play_btn2{
         font-size: var(--fs-1);
     }
+
+
+.menu-playlist .waves {
+    width: 20%;
+    height: 15%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-start;
+    position: absolute;
+    /* top: 300px; */
+    bottom: 10px;
+    left: 45%;
+}
+
+.menu-playlist .waves .wave {
+    width: 15%;
+    height: 100%;
+    background: var(--blue);
+    margin-right: 5px;
+    animation: unset;
+}
+
+.menu-playlist .waves .wave:nth-child(2) {
+    height: 60%;
+}
+
+.menu-playlist .waves .wave:nth-child(3) {
+    height: 30%;
+}
+
+.menu-playlist .active .wave {
+    animation: waves 1s linear infinite;
+}
+
+.menu-playlist .active .wave:nth-child(2) {
+    animation-delay: 0.4s;
+}
+
+.menu-playlist .active .wave:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
 
 }
