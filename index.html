@@ -106,7 +106,7 @@
 						<h3>alen walker-fade</h3>
 						<p>you were the shadow to my life did you feel us another start you fade <br> away afraid our aim is out of sight wanna see us alive.......</p>
 						<div class="sidebar-right-btn">
-							<button class="btn-action active" onclick="playTrack('faded');">
+							<button class="btn-action active" onclick="playTrackMarketing('faded');">
 								jouer
 							</button>
 							<button class="btn-action" onclick="follow(this);">
@@ -170,14 +170,15 @@
 							<div class="song-content-artist-name" id="name_playlist">alan walker</div>
 					</div>
 					<div class="play-btn">
-						<ion-icon class="play_btn" name="play-circle-sharp"></ion-icon>
+						<ion-icon id="play_btn2" class="play_btn2" name="play-circle-sharp"></ion-icon>
 						<ion-icon onclick="showMenuPlaylist();" name="ellipsis-vertical-sharp"></ion-icon>
 					</div>
 				</div>
 
+				<!-- desktop -->
 				<div class="song-btn hidden" data-song-btn>
 					<ion-icon class="prev-track" name="play-back" onclick="prevTrack()"></ion-icon>
-					<ion-icon class="play_btn" name="play"></ion-icon>
+					<ion-icon id="play_btn" class="play_btn" name="play-circle-sharp"></ion-icon>
 					<ion-icon class="next-track" name="play-forward" onclick="nextTrack()"></ion-icon>
 				</div>
 
@@ -249,7 +250,7 @@
 
 			<div class="song-btn" data-song-btn>
 				<ion-icon class="prev-track" name="play-back" onclick="prevTrack()"></ion-icon>
-				<ion-icon class="play_btn2" name="play-circle"></ion-icon>
+				<ion-icon id="play_btn3" class="" name="play-circle"></ion-icon>
 				<ion-icon class="next-track" name="play-forward" onclick="nextTrack()"></ion-icon>
 			</div>
 

@@ -20,8 +20,9 @@ var track_index = 0;
 var isPlaying = false;
 var updateTimer;
 
-const play_btn = document.getElementsByClassName('play_btn')[0];
-const play_btn2 = document.getElementsByClassName('play_btn2')[0];
+const play_btn = document.querySelector('#play_btn');
+const play_btn2 = document.querySelector('#play_btn2');
+const play_btn3 = document.querySelector('#play_btn3');
 const waves = document.querySelector('[data-waves]');
 const waves2 = document.querySelector('[data-waves2]');
 const wave = document.getElementsByClassName('wave')[0];
@@ -374,6 +375,7 @@ albums_list.innerHTML = str_albums; // API GET ALL ALBUMS
 const switchPlayPauseIcon = (value) => {
   play_btn.setAttribute('name', value);
   play_btn2.setAttribute('name', value);
+  play_btn3.setAttribute('name', value);
 }
 
 play_btn.addEventListener('click', () => {
@@ -392,6 +394,21 @@ play_btn.addEventListener('click', () => {
 });
 
 play_btn2.addEventListener('click', () => {
+
+  if (music.paused || music.currentTime <= 0) {
+    music.play();
+    switchPlayPauseIcon('pause-circle-sharp');
+    setEqualizer('active');
+    sessionSet('isplaying',true)
+
+  } else {
+    music.pause();
+    switchPlayPauseIcon('play-circle-sharp');
+    setEqualizer('');
+  }
+});
+
+play_btn3.addEventListener('click', () => {
 
   if (music.paused || music.currentTime <= 0) {
     music.play();
@@ -448,6 +465,8 @@ function clickIconPlay(e){
   content.innerHTML = `<div class="song-content-title" id="title_playlist">${title}</div>
   <div class="song-content-artist-name" id="name_playlist">${artiste_name}</div>`;
 
+
+  // Mobile
   content_menu.innerHTML = `<img class="track-image" src="./assets/img/artists/${artiste}/albums/${album}/${image}" alt="faded">
   <p class="song-content-artist-name">${artiste_name}</p>
   <p class="song-content-title">${title}</p>`;
@@ -464,7 +483,7 @@ function clickIconPlay(e){
       if (id == id_item_playing) {
         
 
-        if (play_btn.getAttribute('name') == 'pause' || play_btn2.getAttribute('name') == 'pause') {
+        if (play_btn.getAttribute('name') == 'pause-circle-sharp' || play_btn2.getAttribute('name') == 'pause-circle-sharp' || play_btn3.getAttribute('name') == 'pause-circle-sharp') {
           unactiveSong(item_list.getAttribute('id_item_playing'));//annuler les active
           music.currentTime = 0;
           e.setAttribute('name', 'play-circle-sharp');
@@ -501,7 +520,7 @@ function clickIconPlay(e){
 
       activeSongOnly(id);
 
-      if (play_btn.getAttribute('name') == 'play-circle-sharp' || play_btn2.getAttribute('name') == 'play-circle-sharp') {
+      if (play_btn.getAttribute('name') == 'play-circle-sharp' || play_btn2.getAttribute('name') == 'play-circle-sharp'  || play_btn3.getAttribute('name') == 'play-circle-sharp') {
         switchPlayPauseIcon('pause-circle-sharp');
         e.setAttribute('name', 'stop-circle-sharp');
         music.play();
@@ -592,6 +611,42 @@ function playpauseTrack() {
   // depending on the current state
   if (!isPlaying) playTrack();
   else pauseTrack();
+}
+
+function playTrackMarketing() {
+
+    if (item_list.hasAttribute('id_item_playing')) {
+      unactiveSong(item_list.getAttribute('id_item_playing'));//annuler les active
+      music.currentTime = 0;
+
+      activeSongOnly(0);
+      // e.setAttribute('name', 'stop-circle-sharp');
+      music.play();
+      setEqualizer('active');
+      item_list.setAttribute('id_item_playing', 0)
+
+    }
+    else{
+
+      activeSongOnly(0);
+      item_list.setAttribute('id_item_playing', 0)
+      // Play the loaded track
+      music.play();
+      isPlaying = true;
+      setEqualizer('active');
+    }
+
+  
+  // Replace icon with the pause icon
+  switchPlayPauseIcon('pause-circle-sharp');
+  
+  // Set an interval of 1000 milliseconds
+  // for updating the seek slider
+  updateTimer = setInterval(seekUpdate, 1000);
+  // sessionSet('music',title)
+
+
+
 }
 
 function playTrack() {
